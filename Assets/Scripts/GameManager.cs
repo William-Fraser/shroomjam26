@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public PlayerController player;
+    public UIManager UIM;
     public MultiplierManager multM { get; private set; }
     public TaskHandler taskM { get; private set; }
 
