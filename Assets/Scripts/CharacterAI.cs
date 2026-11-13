@@ -15,6 +15,8 @@ public class CharacterAI : MonoBehaviour
         outline.OutlineWidth = 10f;
         outline.OutlineColor = Color.white;
         outline.enabled = false;
+
+        UpgradeManager.IncreaseS += IncreaseSpeed;
     }
 
     public void SetFollowDistance(int order)
@@ -38,5 +40,10 @@ public class CharacterAI : MonoBehaviour
             currentTask.Fix();
             GameManager.manager.taskM.RemoveTask(Vector3.zero, currentTask);
         }
+    }
+
+    public void IncreaseSpeed()
+    {
+        agent.speed++;
     }
 }

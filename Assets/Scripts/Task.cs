@@ -33,14 +33,14 @@ public class Task : MonoBehaviour
     private float brakingIn;
     private bool broken;
     
-    public float HappinessValue { get { return happinessValue; } }
+    public float HappinessValue { get { return happinessValue * GameManager.manager.taskM.ShopAttractionMultiplier; } }
     public GameObject BrokenVisual { get { return brokenVisual; } }
     public bool Broken { get { return broken; } }
 
     [Header("Job")]
     [SerializeField]
     private float sadnessValue;
-    public float SadnessValue { get { return sadnessValue; } }
+    public float SadnessValue { get { return sadnessValue / GameManager.manager.taskM.ShopAttractionMultiplier; } }
 
     [SerializeField]
     [Header("change pos on visitors to X:999, Y:999, Z:999")]
@@ -63,6 +63,8 @@ public class Task : MonoBehaviour
         
         if (task == TASK.ATTRACTION || task == TASK.ATTRACTIONRIDE)
             brokenVisual.SetActive(false);
+
+        UpgradeManager.DecreaseT += DecreaseTime;
     }
      
     void Update()
@@ -84,7 +86,7 @@ public class Task : MonoBehaviour
                 return;
 
             case TASK.TRASH:
-                DecreaseHappiness(sadnessValue);
+                DecreaseHappiness(SadnessValue);
                 return;
 
             case TASK.LOST:
@@ -134,6 +136,12 @@ public class Task : MonoBehaviour
         task = OGtype;
         broken = false;
         brokenVisual.SetActive(false);
+    }
+
+    public void DecreaseTime()
+    {
+        waitTime = waitTime / 2;
+        UpgradeManager.DecreaseT -= DecreaseTime;
     }
 
     void OnTriggerStay(Collider other)

@@ -15,6 +15,8 @@ public class TaskHandler : MonoBehaviour
     public List<Task> jobs; // gets added to and removed from, living, todo
     public Task visitorCentre;
 
+    public int ShopAttractionMultiplier = 1;
+
     //this should have calls to get info instead of being public like originally planned, keep this due to time contraint and fix later (hopefull)
 
     void Awake()

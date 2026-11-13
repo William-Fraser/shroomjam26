@@ -1,4 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
+using System;
 
 public class ShopManager : MonoBehaviour
 {
@@ -8,14 +12,56 @@ public class ShopManager : MonoBehaviour
     //prize wheel in GreyLeno section
 
     public UpgradeManager upgradeM;
+    private PlayerController player = GameManager.manager.player;
 
     void Start()
     {
         upgradeM = GetComponent<UpgradeManager>();
+        FixButtons();
     }
 
     //Grey Leno stuff
     // New Rides, New Staff, Better Rides, Date
+    public int PriceRides = 10;
+    public int PriceStaff = 10;
+    public int PriceRides2 = 10;
+    //Meat
+    public int PriceMove = 10;
+    public int PriceTime = 10;
+    public int PriceTragegy = 10;
+    public int PriceGuests = 10;
+
+    //leno
+    public TextMeshProUGUI ButtonTextRides;
+    public TextMeshProUGUI ButtonTextStaff;
+    public TextMeshProUGUI ButtonTextRides2;
+    //Meat
+    public TextMeshProUGUI ButtonTextMove;
+    public TextMeshProUGUI ButtonTextTime;
+    public TextMeshProUGUI ButtonTextTragegy;
+    public TextMeshProUGUI ButtonTextGuests;
+
+
+
+    public String OriginalButtonTextRides;
+    public String OriginalButtonTextStaff;
+    public String OriginalButtonTextRides2;
+    public String OriginalButtonTextMove;
+    public String OriginalButtonTextTime;
+    public String OriginalButtonTextTragegy;
+    public String OriginalButtonTextGuests;
+
+
+    public void PayAndFixButton(int price)
+    {
+
+        FixButtons();
+    }
+
+    public void FixButtons()
+    { 
+    
+    }
 
     public void NewRides()
     { 

@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
     public Canvas Pause;
     public Canvas ShopMeat;
     public Canvas ShopLeno;
+    public Canvas LenoDate;
 
     #region MainMenu
 
@@ -70,7 +71,11 @@ public class UIManager : MonoBehaviour
     public void ShowShopLeno()
     {
         ShopLeno.gameObject.SetActive(true);
+    }
 
+    public void UndertaleRef()
+    {
+        LenoDate.gameObject.SetActive(true);
     }
 
     public void DisableAllCanvas()
@@ -78,6 +83,7 @@ public class UIManager : MonoBehaviour
         Pause.gameObject.SetActive(false);
         ShopMeat.gameObject.SetActive(false);
         ShopLeno.gameObject.SetActive(false);
+        LenoDate.gameObject.SetActive(false);
     }
 
     #endregion

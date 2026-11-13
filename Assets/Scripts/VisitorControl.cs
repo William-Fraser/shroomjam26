@@ -58,6 +58,8 @@ public class VisitorControl : CharacterAI
         getLostTime = (maxTime - Random.Range(lostRate - rangeEnds, lostRate + rangeEnds));// magic number : max trashrate is 100 so they'll drop every 3 seconds otherwise
         lostNotifier.SetActive(false);
         followBool = false;
+
+        UpgradeManager.LowerT += LowerTragedy;
     }
 
     void Update()
@@ -258,6 +260,13 @@ public class VisitorControl : CharacterAI
         lostNotifier.SetActive(false);
         state = STATE.WALK;
         SetDestination();
+    }
+
+    public void LowerTragedy()
+    {
+        trashRate = trashRate - 20;
+        lostRate = lostRate - 20;
+        UpgradeManager.LowerT -= LowerTragedy;
     }
 
     //UI / Outline

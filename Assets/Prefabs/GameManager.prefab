@@ -1608,6 +1608,7 @@ MonoBehaviour:
   Pause: {fileID: 7846655154993982964}
   ShopMeat: {fileID: 1211012033879525116}
   ShopLeno: {fileID: 1083397557492274228}
+  LenoDate: {fileID: 0}
 --- !u!1 &4134347893618926917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,6 +1655,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeM: {fileID: 0}
+  PriceRides: 0
+  PriceStaff: 0
+  PriceRides2: 0
+  PriceMove: 0
+  PriceTime: 0
+  PriceTragegy: 0
+  PriceGuests: 0
+  ButtonTextRides: {fileID: 0}
+  ButtonTextStaff: {fileID: 0}
+  ButtonTextRides2: {fileID: 0}
+  ButtonTextMove: {fileID: 3776989145326096616}
+  ButtonTextTime: {fileID: 1815949392255218719}
+  ButtonTextTragegy: {fileID: 0}
+  ButtonTextGuests: {fileID: 0}
+  OriginalButtonTextRides: 
+  OriginalButtonTextStaff: 
+  OriginalButtonTextRides2: 
+  OriginalButtonTextMove: 
+  OriginalButtonTextTime: 
+  OriginalButtonTextTragegy: 
+  OriginalButtonTextGuests: 
 --- !u!114 &5437969915468730697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,6 +1688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49ed8f2b36034e40823e76c80687bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newAttractions: []
+  newHelpers: []
+  visitorPrefab: {fileID: 0}
 --- !u!1 &4145467942472497090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4410,6 +4435,7 @@ MonoBehaviour:
   attractionKeys: []
   jobs: []
   visitorCentre: {fileID: 0}
+  ShopAttractionMultiplier: 1
 --- !u!114 &6652829562171555802
 MonoBehaviour:
   m_ObjectHideFlags: 0
