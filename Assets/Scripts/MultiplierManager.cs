@@ -6,8 +6,36 @@ public class MultiplierManager : MonoBehaviour
     /*new rides create a happiness level to maintain and when they leave behind mess it lowers the total level a bit,
     cleaning the map raises happiness level of park giving a higher money multiplier?
     the multiplier meter starts at 0 when the day starts and raises when people go on rides,*/
-    private float meterMax;
+    public float meterMax { get; private set; }
     public float meterCurrent { get; private set; }
+
+    private float waitUntil;
+    private float waitingTime = 1;
+
+    void Update()
+    {
+        meterCurrent = Mathf.Round(meterCurrent * 1000f) / 1000f;
+        StartWaiting();
+        FinishWaiting();
+    }
+
+    private void StartWaiting()
+    {
+        if (waitUntil + 1 <= Time.fixedTime) //magic number to control order of operations
+        {
+            waitUntil = Time.fixedTime + waitingTime;
+            //Debug.Log($"{currentTask.name},{waitUntil}, {currentTask.WaitTime}, {Time.fixedTime}");
+        }
+    }
+
+    private void FinishWaiting()
+    {
+        if (waitUntil < Time.fixedTime)
+        {
+
+            GameManager.manager.player.IncreaseMoney(1f * meterCurrent);
+        }
+    }
 
     public void IncreaseMeterMax(float increase)
     {

@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,31 +9,46 @@ public class UIManager : MonoBehaviour
     public Canvas ShopLeno;
     public Canvas LenoDate;
 
+    public Slider Volume;
+    public AudioSource sound;
+
+    [Space(20)]
+    public TextMeshProUGUI Multiplier;
+    public TextMeshProUGUI Money;
+
+    void Start()
+    {
+        Time.timeScale = 0;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        { 
+            Pause.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        sound.volume = Volume.value;
+
+        Multiplier.text = $"Mult: {GameManager.manager.multM.meterCurrent}/{GameManager.manager.multM.meterMax}";
+        Money.text = $"${GameManager.manager.player.money}$";
+    }
+
     #region MainMenu
-
-    public void StartGame()
-    { 
-        //Begins Game
-    }
-
-    public void LoadGame()
-    { 
-        //Starts Game and Loads Saved Data
-    }
 
     // could put settings here too?
 
-    public void QuitGame()
-    { 
-        // stops program
-    }
+    
     #endregion
 
     #region PauseMenu
 
-    public void Resume()
+    public void EnterGame()
     { 
         //resumes game, GM unpause
+        Pause.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void Settings()
@@ -44,9 +61,10 @@ public class UIManager : MonoBehaviour
         //gives 999999999 money
     }
 
-    public void ReturnToMainMenu()
-    { 
-        // saves, closes pausemenu and changes scene to main menu
+    public void QuitGame()
+    {
+        // stops program
+        Application.Quit();
     }
     #endregion
 

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 move;
     private Vector3 camStartPos;
     private float screenEdgeDistance;
-    private int money;
+    public float money { get; private set; }
 
     private List<HelperControl> helpers;
 
@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        money = Mathf.Round(money * 100f) / 100f;
+
         //control
         ClickInteract();
         DragToMove();
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
             if (currentTask != null) return;
 
             character.MoveToTarget(GetCentreScreenPosInWorld(cam));
+            //Debug.Log("hit"+ GetCentreScreenPosInWorld(cam));
             // add boundaries
         }
     }
@@ -70,7 +73,7 @@ public class PlayerController : MonoBehaviour
         //clicking on an object interacts with it
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-
+            Debug.Log($"Helpers {helpers.Count}");
 
             Task task;
             task = GetTaskAtMousePos(cam);
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (helpers.Count > 0)
                 {
+
                     helpers[0].SetTask(task);
                     helpers.RemoveAt(0);
                 }
@@ -99,6 +103,11 @@ public class PlayerController : MonoBehaviour
     { 
         helpers.Add(helper);
         helper.SetFollowDistance(helpers.Count);
+    }
+
+    public void RemoveHelper(HelperControl helper)
+    {
+        helpers.Remove(helper);
     }
 
     public void MoveToWork(Task task)
@@ -140,14 +149,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void IncreaseMoney()
-    { 
-        
+    public void IncreaseMoney(float money)
+    {
+        this.money += money;
     }
 
-    private void DecreaseMoney(int money)
-    { 
-        
+    public void DecreaseMoney(float money)
+    {
+        this.money -= money;
     }
 
     private static Vector3 GetMousePosInWorld(Camera camera)
@@ -185,7 +194,10 @@ public class PlayerController : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            if (hit.transform.parent.gameObject.TryGetComponent<Task>(out Task task) == true)
+            RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity); 
+
+            for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.parent.gameObject.TryGetComponent<Task>(out Task task) == true)
             { 
                 if (task.TaskType == TASK.TRASH ||
                     task.TaskType == TASK.FIX ||

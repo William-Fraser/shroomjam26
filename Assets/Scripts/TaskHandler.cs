@@ -60,6 +60,7 @@ public class TaskHandler : MonoBehaviour
             attractions.Remove(pos);
             attractionKeys = new Vector3[attractions.Count];
             attractions.Keys.CopyTo(attractionKeys, 0);
+            GameManager.manager.multM.DecreaseMeterMax(1);
         }
         else if (jobs.Contains(task))
             jobs.Remove(task);

@@ -25,11 +25,13 @@ public class UpgradeManager : MonoBehaviour
         for (int i = 0; i < newAttractions.Count; i++)
         {
             newAttractions[i].gameObject.SetActive(false);
+            GameManager.manager.taskM.RemoveTask(newAttractions[i].transform.position, newAttractions[i]);
         }
 
         for (int i = 0; i < newHelpers.Count; i++)
         {
             newHelpers[i].gameObject.SetActive(false);
+            GameManager.manager.player.RemoveHelper(newHelpers[i]);
         }
     }
 
@@ -43,6 +45,7 @@ public class UpgradeManager : MonoBehaviour
     {
         // reveal new pre-placed rides
         newAttractions[0].gameObject.SetActive(true);
+        GameManager.manager.taskM.AddTask(newAttractions[0].transform.position, newAttractions[0]);
         newAttractions.RemoveAt(0);
     }
 

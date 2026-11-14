@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class VisitorControl : CharacterAI
 {
@@ -16,7 +17,7 @@ public class VisitorControl : CharacterAI
     public STATE State { get { return state; } }
 
     [Space(20)]
-    private int currentDestination;
+    private Vector3 currentLocate;
     public GameObject Visual;
     private float waitUntil;
     public float currentGameTime;
@@ -50,7 +51,6 @@ public class VisitorControl : CharacterAI
         taskHandl = GameManager.manager.taskM;
 
         state = STATE.WALK;
-        currentDestination = -1;
         SetDestination();
         SetCurrentTask();
 
@@ -119,33 +119,23 @@ public class VisitorControl : CharacterAI
 
     private void SetCurrentTask()
     {
-        currentTask = taskHandl.attractions[taskHandl.attractionKeys[currentDestination]];
+        currentTask = taskHandl.attractions[currentLocate];
     }
 
     private void SetDestination()
     {
-        currentDestination++;
+        List<Vector3> trueLocations = new List<Vector3>();
 
-        currentDestination = ChooseNewDestination(currentDestination, 0);
+        for (int i = 0; i < taskHandl.attractionKeys.Length; i++)
+        {
+            if (taskHandl.attractions[taskHandl.attractionKeys[i]].isActiveAndEnabled && taskHandl.attractionKeys[i] != currentLocate)
+                trueLocations.Add(taskHandl.attractionKeys[i]);
+        }
 
-        agent.SetDestination(taskHandl.attractionKeys[currentDestination]);
+        currentLocate = trueLocations[Random.Range(0, trueLocations.Count)];
+        agent.SetDestination(currentLocate);
 
-       // Debug.Log($"destination set {currentDestination} {state}");
-    }
-
-    private int ChooseNewDestination(int current, int breaker)
-    {
-        int newDestination = Random.Range(0, taskHandl.attractionKeys.Length);
-        int recursionBreaker = breaker;
-
-        recursionBreaker++;
-
-        if (newDestination != current)
-            return newDestination;
-        else if (recursionBreaker == taskHandl.attractionKeys.Length)
-            return 0;
-        else
-            return ChooseNewDestination(current, recursionBreaker);
+        Debug.Log($"destination set {currentLocate} {state}");
     }
 
     private void ReachDestination()
@@ -211,7 +201,7 @@ public class VisitorControl : CharacterAI
         dropTrashTime = (int)Time.fixedTime + (maxTime - Random.Range(trashRate-rangeEnds, trashRate+rangeEnds));// magic number : max trashrate is 100 so they'll drop every 3 seconds otherwise
         agent.isStopped = true;
         state = STATE.LITTER;
-        currentTask = Instantiate(TrashPrefab, transform.position, TrashPrefab.transform.rotation).GetComponent<Task>();
+        currentTask = Instantiate(TrashPrefab, new Vector3(transform.position.x, TrashPrefab.transform.position.y, transform.position.z), TrashPrefab.transform.rotation).GetComponent<Task>();
         currentTask.gameObject.SetActive(false);
     }
 

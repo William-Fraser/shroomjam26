@@ -24,7 +24,7 @@ public class HelperControl : CharacterAI
 
     private float waitUntil;
 
-    void Start()
+    void Awake()
     {
         
         followingCharacter = GameManager.manager.player.character;
